@@ -1,5 +1,4 @@
-using System;
-
+﻿
 namespace tecnovision_backend.Models
 {
     public class ErrorViewModel
@@ -9,3 +8,4 @@ namespace tecnovision_backend.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
+
