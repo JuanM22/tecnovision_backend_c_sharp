@@ -4,18 +4,18 @@
     {
 
         private long paymentMethodId;
-        private string paymentMethod;
+        private string paymentMethodName;
 
         public PaymentMethod()
         {
             this.paymentMethodId = 0;
-            this.paymentMethod = "";
+            this.paymentMethodName = "";
         }
 
-        public PaymentMethod(long paymentMethodId, string paymentMethod)
+        public PaymentMethod(long paymentMethodId, string paymentMethodName)
         {
             this.paymentMethodId = paymentMethodId;
-            this.paymentMethod = paymentMethod;
+            this.paymentMethodName = paymentMethodName;
         }
 
         public long PaymentMethodId
@@ -24,10 +24,10 @@
             set => paymentMethodId = value;
         }
 
-        public string PAYMENTMETHOD
+        public string PaymentMethodName
         {
-            get => paymentMethod;
-            set => paymentMethod = value;
+            get => paymentMethodName;
+            set => paymentMethodName = value;
         }
 
 

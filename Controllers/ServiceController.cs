@@ -29,9 +29,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveService([FromBody] Service service)
+        public string[] SaveService([FromBody] Service service)
         {
-            string message = (service.Id == 0) ? "El servicio ha sido registrado" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (service.ServiceId == 0) ? "El servicio ha sido registrado" : "Datos actualizados correctamente";
             try
             {
                 ServiceServicesImplements serviceServicesImplements = new ServiceServicesImplements();
@@ -40,9 +41,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (service.Id == 0) ? "Error al crear el servicio" : "Error al actualizar los datos";
+                messages[0] = (service.ServiceId == 0) ? "Error al crear el servicio" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
     }
 }

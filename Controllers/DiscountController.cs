@@ -28,9 +28,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveDiscount([FromBody] Discount discount)
+        public string[] SaveDiscount([FromBody] Discount discount)
         {
-            string message = (discount.Id == 0) ? "El descuento ha sido registrado" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (discount.DiscountId == 0) ? "El descuento ha sido registrado" : "Datos actualizados correctamente";
             try
             {
                 DiscountServicesImplements discountServicesImplements = new DiscountServicesImplements();
@@ -39,9 +40,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (discount.Id == 0) ? "Error al crear el descuento" : "Error al actualizar los datos";
+                messages[0] = (discount.DiscountId == 0) ? "Error al crear el descuento" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
 
     }

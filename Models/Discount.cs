@@ -3,28 +3,28 @@
     public class Discount
     {
 
-        private long id;
+        private long discountId;
         private bool state;
         private double value;
 
         public Discount()
         {
-            this.id = 0;
+            this.discountId = 0;
             this.state = true;
             this.value = 0;
         }
 
-        public Discount(long id, bool state, double value)
+        public Discount(long discountId, bool state, double value)
         {
-            this.id = id;
+            this.discountId = discountId;
             this.state = state;
             this.value = value;
         }
 
-        public long Id
+        public long DiscountId
         {
-            get => id;
-            set => id = value;
+            get => discountId;
+            set => discountId = value;
         }
 
         public bool State

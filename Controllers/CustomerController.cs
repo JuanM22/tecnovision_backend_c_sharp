@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using tecnovision_backend.Models;
 using tecnovision_backend.Services;
 
@@ -27,9 +25,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveCustomer([FromBody] Customer customer)
+        public string[] SaveCustomer([FromBody] Customer customer)
         {
-            string message = (customer.Id == 0) ? "El cliente ha sido registrado" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (customer.CustomerId == 0) ? "El cliente ha sido registrado" : "Datos actualizados correctamente";
             try
             {
                 CustomerServicesImplements customerServicesImplements = new CustomerServicesImplements();
@@ -38,9 +37,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (customer.Id == 0) ? "Error al crear el cliente" : "Error al actualizar los datos";
+                messages[0] = (customer.CustomerId == 0) ? "Error al crear el cliente" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
     }
 }

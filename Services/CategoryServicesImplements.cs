@@ -63,18 +63,18 @@ namespace tecnovision_backend.Services
         {
             SqlConnection connection = DBConnection.GetConnection();
             string query;
-            query = (o.Id > 0) ? "UPDATE Categories set category_name = @CategoryName,  state = @CategoryState, discount_discount_id  = @DiscountId " +
+            query = (o.CategoryId > 0) ? "UPDATE Categories set category_name = @CategoryName,  state = @CategoryState, discount_discount_id  = @DiscountId " +
                                  "WHERE category_id = @CategoryId" :
                                  "INSERT INTO Categories (category_name, state, discount_discount_id) VALUES (@CategoryName, @CategoryState, @DiscountId)";
             SqlCommand sqlCommand = new SqlCommand(query, connection);
             connection.Open();
             sqlCommand.Parameters.AddWithValue("@CategoryName", o.Name);
             sqlCommand.Parameters.AddWithValue("@CategoryState", o.State);
-            if (o.Discount != null) sqlCommand.Parameters.AddWithValue("@DiscountId", o.Discount.Id);
+            if (o.Discount != null) sqlCommand.Parameters.AddWithValue("@DiscountId", o.Discount.DiscountId);
             else sqlCommand.Parameters.AddWithValue("@DiscountId", DBNull.Value);
-            if (o.Id > 0)
+            if (o.CategoryId > 0)
             {
-                sqlCommand.Parameters.AddWithValue("@CategoryId", o.Id);
+                sqlCommand.Parameters.AddWithValue("@CategoryId", o.CategoryId);
             }
             sqlCommand.ExecuteNonQuery();
             connection.Close();

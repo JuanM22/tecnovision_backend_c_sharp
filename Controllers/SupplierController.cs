@@ -27,9 +27,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveSupplier([FromBody] Supplier supplier)
+        public string[] SaveSupplier([FromBody] Supplier supplier)
         {
-            string message = (supplier.Id == 0) ? "El proveedor ha sido registrado" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (supplier.SupplierId == 0) ? "El proveedor ha sido registrado" : "Datos actualizados correctamente";
             try
             {
                 SupplierServicesImplements supplierServicesImplements = new SupplierServicesImplements();
@@ -38,9 +39,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (supplier.Id == 0) ? "Error al crear el proveedor" : "Error al actualizar los datos";
+                messages[0] = (supplier.SupplierId == 0) ? "Error al crear el proveedor" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
     }
 }

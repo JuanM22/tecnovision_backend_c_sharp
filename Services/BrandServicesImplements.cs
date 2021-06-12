@@ -51,15 +51,15 @@ namespace tecnovision_backend.Services
         {
             SqlConnection connection = DBConnection.GetConnection();
             string query;
-            query = (o.Id > 0) ? "UPDATE Brands set brand_name = @BrandName,  state = @BrandState WHERE brand_id = @BrandId" :
+            query = (o.BrandId > 0) ? "UPDATE Brands set brand_name = @BrandName,  state = @BrandState WHERE brand_id = @BrandId" :
                                  "INSERT INTO Brands (brand_name, state) VALUES (@BrandName, @BrandState)";
             SqlCommand sqlCommand = new SqlCommand(query, connection);
             connection.Open();
             sqlCommand.Parameters.AddWithValue("@BrandName", o.BrandName);
             sqlCommand.Parameters.AddWithValue("@BrandState", o.State);
-            if (o.Id > 0)
+            if (o.BrandId > 0)
             {
-                sqlCommand.Parameters.AddWithValue("@BrandId", o.Id);
+                sqlCommand.Parameters.AddWithValue("@BrandId", o.BrandId);
             }
             sqlCommand.ExecuteNonQuery();
             connection.Close();

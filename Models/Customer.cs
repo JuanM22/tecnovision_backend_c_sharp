@@ -5,7 +5,7 @@ namespace tecnovision_backend.Models
     public class Customer
     {
 
-        private long id, document;
+        private long customerId, document;
         private string address, email, lastName, name, password;
         private decimal phone;
         private bool state;
@@ -14,7 +14,7 @@ namespace tecnovision_backend.Models
 
         public Customer()
         {
-            this.id = 0;
+            this.customerId = 0;
             this.document = 0;
             this.address = "";
             this.email = "";
@@ -27,9 +27,9 @@ namespace tecnovision_backend.Models
             this.city = new City();
         }
 
-        public Customer(long id, long document, string address, string email, string lastName, string name, string password, decimal phone, bool state)
+        public Customer(long customerId, long document, string address, string email, string lastName, string name, string password, decimal phone, bool state)
         {
-            this.id = id;
+            this.customerId = customerId;
             this.document = document;
             this.address = address;
             this.email = email;
@@ -42,10 +42,10 @@ namespace tecnovision_backend.Models
             this.city = new City();
         }
 
-        public long Id
+        public long CustomerId
         {
-            get => id;
-            set => id = value;
+            get => customerId;
+            set => customerId = value;
         }
 
         public long Document

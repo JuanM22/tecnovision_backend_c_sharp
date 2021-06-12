@@ -27,9 +27,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveProduct([FromBody] Product product)
+        public string[] SaveProduct([FromBody] Product product)
         {
-            string message = (product.Id == 0) ? "El producto ha sido registrado" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (product.ProductId == 0) ? "El producto ha sido registrado" : "Datos actualizados correctamente";
             try
             {
                 ProductServicesImplements productServicesImplements = new ProductServicesImplements();
@@ -38,9 +39,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (product.Id == 0) ? "Error al crear el producto" : "Error al actualizar los datos";
+                messages[0] = (product.ProductId == 0) ? "Error al crear el producto" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
     }
 }

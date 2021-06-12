@@ -21,9 +21,10 @@ namespace tecnovision_backend.Services
                 while (reader.Read())
                 {
                     Service service = new Service();
-                    service.Id = (long)reader["service_id"];
+                    service.ServiceId = (long)reader["service_id"];
                     service.Description = reader["service_description"].ToString();
                     service.Name = reader["service_name"].ToString();
+                    service.Value = (double)reader["service_price"];
                     service.State = (bool)reader["state"];
                     services.Add(service);
                 }
@@ -45,9 +46,10 @@ namespace tecnovision_backend.Services
                 if (reader.Read())
                 {
                     service = new Service();
-                    service.Id = (long)reader["service_id"];
+                    service.ServiceId = (long)reader["service_id"];
                     service.Description = reader["service_description"].ToString();
                     service.Name = reader["service_name"].ToString();
+                    service.Value = (double)reader["service_price"];
                     service.State = (bool)reader["state"];
                 }
             }
@@ -59,18 +61,19 @@ namespace tecnovision_backend.Services
         {
             SqlConnection connection = DBConnection.GetConnection();
             string query;
-            query = (o.Id > 0) ? "UPDATE Services set service_description = @ServiceDescription, service_name = @ServiceName, state = @State " +
-                                 "WHERE service_id = @Id" :
-                                 "INSERT INTO Services (service_description, service_name, state) " +
-                                 "VALUES (@ServiceDescription, @ServiceName, @State)";
+            query = (o.ServiceId > 0) ? "UPDATE Services set service_description = @ServiceDescription, service_name = @ServiceName, " +
+                                        "service_price = @ServicePrice, state = @State WHERE service_id = @Id" :
+                                        "INSERT INTO Services (service_description, service_name, service_price, state) " +
+                                        "VALUES (@ServiceDescription, @ServiceName, @ServicePrice, @State)";
             SqlCommand sqlCommand = new SqlCommand(query, connection);
             connection.Open();
             sqlCommand.Parameters.AddWithValue("@ServiceDescription", o.Description);
             sqlCommand.Parameters.AddWithValue("@ServiceName", o.Name);
+            sqlCommand.Parameters.AddWithValue("@ServicePrice", o.Value / 100);
             sqlCommand.Parameters.AddWithValue("@State", o.State);
-            if (o.Id > 0)
+            if (o.ServiceId > 0)
             {
-                sqlCommand.Parameters.AddWithValue("@Id", o.Id);
+                sqlCommand.Parameters.AddWithValue("@Id", o.ServiceId);
             }
             sqlCommand.ExecuteNonQuery();
             connection.Close();

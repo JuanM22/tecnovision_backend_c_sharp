@@ -12,6 +12,7 @@ namespace tecnovision_backend.Controllers
     [Route("/paymentMethod")]
     public class PaymentMethodController : Controller
     {
+
         [HttpGet("list")]
         public List<PaymentMethod> ListPaymentMethods()
         {

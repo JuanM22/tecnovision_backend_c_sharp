@@ -21,7 +21,7 @@ namespace tecnovision_backend.Services
                 while (reader.Read())
                 {
                     Customer customer = new Customer();
-                    customer.Id = (long)reader["customer_id"];
+                    customer.CustomerId = (long)reader["customer_id"];
                     customer.Address = reader["customer_address"].ToString();
                     customer.Document = (long)reader["customer_document"];
                     customer.Email = reader["customer_email"].ToString();
@@ -52,7 +52,7 @@ namespace tecnovision_backend.Services
                 if (reader.Read())
                 {
                     customer = new Customer();
-                    customer.Id = (long)reader["customer_id"];
+                    customer.CustomerId = (long)reader["customer_id"];
                     customer.Address = reader["customer_address"].ToString();
                     customer.Document = (long)reader["customer_document"];
                     customer.Email = reader["customer_email"].ToString();
@@ -73,7 +73,7 @@ namespace tecnovision_backend.Services
         {
             SqlConnection connection = DBConnection.GetConnection();
             string query;
-            query = (o.Id > 0) ? "UPDATE Customers set customer_document = @Document, customer_address = @Address, " +
+            query = (o.CustomerId > 0) ? "UPDATE Customers set customer_document = @Document, customer_address = @Address, " +
                                  "customer_email = @Email, customer_last_name = @LastName, customer_name = @Name, " +
                                  "customer_password = @Password, customer_phone = @Phone, state = @State," +
                                  "administrator_administrator_id = @AdministratorId, city_city_id = @CityId WHERE customer_id = @Id" :
@@ -90,14 +90,46 @@ namespace tecnovision_backend.Services
             sqlCommand.Parameters.AddWithValue("@Password", o.Password);
             sqlCommand.Parameters.AddWithValue("@Phone", o.Phone);
             sqlCommand.Parameters.AddWithValue("@State", o.State);
-            sqlCommand.Parameters.AddWithValue("@AdministratorId", o.Administrator.Id);
+            sqlCommand.Parameters.AddWithValue("@AdministratorId", o.Administrator.AdministratorId);
             sqlCommand.Parameters.AddWithValue("@CityId", o.City.CityId);
-            if (o.Id > 0)
+            if (o.CustomerId > 0)
             {
-                sqlCommand.Parameters.AddWithValue("@Id", o.Id);
+                sqlCommand.Parameters.AddWithValue("@Id", o.CustomerId);
             }
             sqlCommand.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public Customer Login(string email, string password)
+        {
+            Customer customer = null;
+            SqlConnection connection = DBConnection.GetConnection();
+            connection.Open();
+            string query = "SELECT * FROM Customers " +
+                           "WHERE customer_email = @CustomerEmail AND customer_password = @CustomerPassword";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@CustomerEmail", email);
+            command.Parameters.AddWithValue("@CustomerPassword", password);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    customer = new Customer();
+                    customer.CustomerId = (long)reader["customer_id"];
+                    customer.Address = reader["customer_address"].ToString();
+                    customer.Document = (long)reader["customer_document"];
+                    customer.Email = reader["customer_email"].ToString();
+                    customer.LastName = reader["customer_last_name"].ToString();
+                    customer.Name = reader["customer_name"].ToString();
+                    customer.Password = reader["customer_password"].ToString();
+                    customer.Phone = (decimal)(reader["customer_phone"]);
+                    customer.State = (bool)reader["state"];
+                    customer.Administrator = new AdministratorServicesImplements().FindById((long)reader["administrator_administrator_id"]);
+                    customer.City = new CityServicesImplements().FindById((long)reader["city_city_id"]);
+                }
+            }
+            connection.Close();
+            return customer;
         }
 
     }

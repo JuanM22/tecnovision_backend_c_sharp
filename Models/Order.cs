@@ -6,42 +6,42 @@ namespace tecnovision_backend.Models
     public class Order
     {
 
-        private long id;
+        private long orderId;
         private DateTime deliveryDate, dispatchDate;
-        private bool state;
+        private string state;
         private double totalPrice;
         private Customer customer;
         private PaymentMethod paymentMethod;
-        private List<OrderDetail> orderDetails;
+        private List<OrderDetail> orderDetailList;
 
         public Order()
         {
-            this.id = 0;
+            this.orderId = 0;
             this.deliveryDate = new DateTime();
             this.dispatchDate = new DateTime();
-            this.state = true;
+            this.state = "active";
             this.totalPrice = 0;
             this.customer = new Customer();
             this.paymentMethod = new PaymentMethod();
-            this.orderDetails = new List<OrderDetail>();
+            this.orderDetailList = new List<OrderDetail>();
         }
 
-        public Order(long id, DateTime deliveryDate, DateTime dispatchDate, bool state, double totalPrice)
+        public Order(long orderId, DateTime deliveryDate, DateTime dispatchDate, string state, double totalPrice)
         {
-            this.id = id;
+            this.orderId = orderId;
             this.deliveryDate = deliveryDate;
             this.dispatchDate = dispatchDate;
             this.state = state;
             this.totalPrice = totalPrice;
             this.customer = new Customer();
             this.paymentMethod = new PaymentMethod();
-            this.orderDetails = new List<OrderDetail>();
+            this.orderDetailList = new List<OrderDetail>();
         }
 
-        public long Id
+        public long OrderId
         {
-            get => id;
-            set => id = value;
+            get => orderId;
+            set => orderId = value;
         }
 
         public DateTime DeliveryDate
@@ -56,7 +56,7 @@ namespace tecnovision_backend.Models
             set => dispatchDate = value;
         }
 
-        public bool State
+        public string State
         {
             get => state;
             set => state = value;
@@ -80,10 +80,10 @@ namespace tecnovision_backend.Models
             set => paymentMethod = value;
         }
 
-        public List<OrderDetail> OrderDetails
+        public List<OrderDetail> OrderDetailList
         {
-            get => orderDetails;
-            set => orderDetails = value;
+            get => orderDetailList;
+            set => orderDetailList = value;
         }
 
     }

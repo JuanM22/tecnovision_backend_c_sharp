@@ -5,7 +5,7 @@ namespace tecnovision_backend.Models
     public class Supplier
     {
 
-        private long id;
+        private long supplierId;
         private string email, name, nit;
         private decimal phone;
         private bool state;
@@ -13,7 +13,7 @@ namespace tecnovision_backend.Models
 
         public Supplier()
         {
-            this.id = 0;
+            this.supplierId = 0;
             this.email = "";
             this.name = "";
             this.nit = "";
@@ -22,9 +22,9 @@ namespace tecnovision_backend.Models
             this.city = new City();
         }
 
-        public Supplier(long id, string email, string name, string nit, decimal phone, bool state)
+        public Supplier(long supplierId, string email, string name, string nit, decimal phone, bool state)
         {
-            this.id = id;
+            this.supplierId = supplierId;
             this.email = email;
             this.name = name;
             this.nit = nit;
@@ -33,10 +33,10 @@ namespace tecnovision_backend.Models
             this.city = new City();
         }
 
-        public long Id
+        public long SupplierId
         {
-            get => id;
-            set => id = value;
+            get => supplierId;
+            set => supplierId = value;
         }
 
         public string Email

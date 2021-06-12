@@ -4,19 +4,19 @@
     {
 
         private string brandName;
-        private long id;
+        private long brandId;
         private bool state;
 
         public Brand()
         {
-            this.id = 0;
+            this.brandId = 0;
             this.brandName = "";
             this.state = true;
         }
 
-        public Brand(long id, string brandName, bool state)
+        public Brand(long brandId, string brandName, bool state)
         {
-            this.id = id;
+            this.brandId = brandId;
             this.brandName = brandName;
             this.state = state;
         }
@@ -27,10 +27,10 @@
             set => brandName = value;
         }
 
-        public long Id
+        public long BrandId
         {
-            get => id;
-            set => id = value;
+            get => brandId;
+            set => brandId = value;
         }
 
         public bool State

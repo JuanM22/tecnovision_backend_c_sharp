@@ -4,21 +4,24 @@
     {
 
         private string description, name;
-        private long id;
+        private long serviceId;
+        private double value;
         private bool state;
 
         public Service()
         {
             this.description = "";
-            this.id = 0;
+            this.serviceId = 0;
             this.name = "";
+            this.value = 0;
             this.state = true;
         }
-        public Service(string description, long id, string name, bool state)
+        public Service(string description, long serviceId, string name, double value, bool state)
         {
             this.description = description;
-            this.id = id;
+            this.serviceId = serviceId;
             this.name = name;
+            this.value = 0;
             this.state = state;
         }
 
@@ -28,16 +31,22 @@
             set => description = value;
         }
 
-        public long Id
+        public long ServiceId
         {
-            get => id;
-            set => id = value;
+            get => serviceId;
+            set => serviceId = value;
         }
 
         public string Name
         {
             get => name;
             set => name = value;
+        }
+
+        public double Value
+        {
+            get => value;
+            set => this.value = value;
         }
 
         public bool State

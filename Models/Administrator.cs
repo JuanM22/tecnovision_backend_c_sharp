@@ -5,7 +5,7 @@ namespace tecnovision_backend.Models
     public class Administrator
     {
 
-        private long id, document;
+        private long administratorId, document;
         private string address, email, lastName, name, password;
         private decimal phone;
         private bool state;
@@ -13,7 +13,7 @@ namespace tecnovision_backend.Models
 
         public Administrator()
         {
-            this.id = 0;
+            this.administratorId = 0;
             this.document = 0;
             this.address = "";
             this.email = "";
@@ -25,9 +25,9 @@ namespace tecnovision_backend.Models
             this.city = new City();
         }
 
-        public Administrator(long id, long document, string address, string email, string lastName, string name, string password, decimal phone, bool state)
+        public Administrator(long administratorId, long document, string address, string email, string lastName, string name, string password, decimal phone, bool state)
         {
-            this.id = id;
+            this.administratorId = administratorId;
             this.document = document;
             this.address = address;
             this.email = email;
@@ -39,10 +39,10 @@ namespace tecnovision_backend.Models
             this.city = new City();
         }
 
-        public long Id
+        public long AdministratorId
         {
-            get => id;
-            set => id = value;
+            get => administratorId;
+            set => administratorId = value;
         }
 
         public long Document

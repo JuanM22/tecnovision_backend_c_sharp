@@ -29,9 +29,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveBrand([FromBody] Category category)
+        public string[] SaveBrand([FromBody] Category category)
         {
-            string message = (category.Id == 0) ? "La categoría ha sido registrada" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (category.CategoryId == 0) ? "La categoría ha sido registrada" : "Datos actualizados correctamente";
             try
             {
                 CategoryServicesImplements categoryServicesImplements = new CategoryServicesImplements();
@@ -40,9 +41,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (category.Id == 0) ? "Error al crear la categoría" : "Error al actualizar los datos";
+                messages[0] = (category.CategoryId == 0) ? "Error al crear la categoría" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
     }
 }

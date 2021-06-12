@@ -21,7 +21,7 @@ namespace tecnovision_backend.Services
                 while (reader.Read())
                 {
                     Product product = new Product();
-                    product.Id = (long)reader["product_id"];
+                    product.ProductId = (long)reader["product_id"];
                     product.Code = (long)reader["product_code"];
                     product.Description = reader["product_description"].ToString();
                     product.ImagePath = reader["image_path"].ToString();
@@ -52,7 +52,7 @@ namespace tecnovision_backend.Services
                 if (reader.Read())
                 {
                     product = new Product();
-                    product.Id = (long)reader["product_id"];
+                    product.ProductId = (long)reader["product_id"];
                     product.Code = (long)reader["product_code"];
                     product.Description = reader["product_description"].ToString();
                     product.ImagePath = reader["image_path"].ToString();
@@ -73,7 +73,7 @@ namespace tecnovision_backend.Services
         {
             SqlConnection connection = DBConnection.GetConnection();
             string query;
-            query = (o.Id > 0) ? "UPDATE Products set product_code = @ProductCode, product_description = @ProductDescription, image_path = @ImagePath, " +
+            query = (o.ProductId > 0) ? "UPDATE Products set product_code = @ProductCode, product_description = @ProductDescription, image_path = @ImagePath, " +
                                  "product_name = @ProductName, product_price = @ProductPrice, state = @State, stock = @Stock, brand_brand_id = @BrandId, " +
                                  "category_category_id = @CategoryId, supplier_supplier_id = @SupplierId WHERE product_id = @Id" :
                                  "INSERT INTO Products (product_code, product_description, image_path, product_name, product_price, state, stock, " +
@@ -88,12 +88,12 @@ namespace tecnovision_backend.Services
             sqlCommand.Parameters.AddWithValue("@ProductPrice", o.UnitPrice);
             sqlCommand.Parameters.AddWithValue("@State", o.State);
             sqlCommand.Parameters.AddWithValue("@Stock", o.Stock);
-            sqlCommand.Parameters.AddWithValue("@BrandId", o.Brand.Id);
-            sqlCommand.Parameters.AddWithValue("@CategoryId", o.Category.Id);
-            sqlCommand.Parameters.AddWithValue("@SupplierId", o.Supplier.Id);
-            if (o.Id > 0)
+            sqlCommand.Parameters.AddWithValue("@BrandId", o.Brand.BrandId);
+            sqlCommand.Parameters.AddWithValue("@CategoryId", o.Category.CategoryId);
+            sqlCommand.Parameters.AddWithValue("@SupplierId", o.Supplier.SupplierId);
+            if (o.ProductId > 0)
             {
-                sqlCommand.Parameters.AddWithValue("@Id", o.Id);
+                sqlCommand.Parameters.AddWithValue("@Id", o.ProductId);
             }
             sqlCommand.ExecuteNonQuery();
             connection.Close();

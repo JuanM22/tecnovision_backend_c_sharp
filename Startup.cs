@@ -13,6 +13,7 @@ namespace tecnovision_backend
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,6 +24,16 @@ namespace tecnovision_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowAllOrigins",
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin();
+                                      builder.AllowAnyHeader();
+                                      builder.AllowAnyMethod();
+                                  });
+            });
             services.AddControllersWithViews();
         }
 
@@ -43,6 +54,8 @@ namespace tecnovision_backend
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors("AllowAllOrigins");
 
             app.UseAuthorization();
 

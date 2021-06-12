@@ -26,9 +26,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveAdministrator([FromBody] Administrator administrator)
+        public string[] SaveAdministrator([FromBody] Administrator administrator)
         {
-            string message = (administrator.Id == 0) ? "El administrator ha sido registrado" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (administrator.AdministratorId == 0) ? "El administrator ha sido registrado" : "Datos actualizados correctamente";
             try
             {
                 AdministratorServicesImplements administratorServicesImplements = new AdministratorServicesImplements();
@@ -37,9 +38,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (administrator.Id == 0) ? "Error al crear el administrator" : "Error al actualizar los datos";
+                messages[0] = (administrator.AdministratorId == 0) ? "Error al crear el administrator" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
 
     }

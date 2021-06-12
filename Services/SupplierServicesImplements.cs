@@ -21,7 +21,7 @@ namespace tecnovision_backend.Services
                 while (reader.Read())
                 {
                     Supplier supplier = new Supplier();
-                    supplier.Id = (long)reader["supplier_id"];
+                    supplier.SupplierId = (long)reader["supplier_id"];
                     supplier.Email = reader["supplier_email"].ToString();
                     supplier.Name = reader["supplier_name"].ToString();
                     supplier.Nit = reader["nit"].ToString();
@@ -48,7 +48,7 @@ namespace tecnovision_backend.Services
                 if (reader.Read())
                 {
                     supplier = new Supplier();
-                    supplier.Id = (long)reader["supplier_id"];
+                    supplier.SupplierId = (long)reader["supplier_id"];
                     supplier.Email = reader["supplier_email"].ToString();
                     supplier.Name = reader["supplier_name"].ToString();
                     supplier.Nit = reader["nit"].ToString();
@@ -65,7 +65,7 @@ namespace tecnovision_backend.Services
         {
             SqlConnection connection = DBConnection.GetConnection();
             string query;
-            query = (o.Id > 0) ? "UPDATE Suppliers set supplier_email = @SupplierEmail, supplier_name = @SupplierName, nit = @Nit, " +
+            query = (o.SupplierId > 0) ? "UPDATE Suppliers set supplier_email = @SupplierEmail, supplier_name = @SupplierName, nit = @Nit, " +
                                  "supplier_phone = @SupplierPhone, state = @State, city_city_id = @CityId WHERE supplier_id = @Id" :
                                  "INSERT INTO Suppliers (supplier_email, supplier_name, nit, supplier_phone, state, city_city_id) " +
                                  "VALUES (@SupplierEmail, @SupplierName, @Nit, @SupplierPhone, @State, @CityId)";
@@ -77,9 +77,9 @@ namespace tecnovision_backend.Services
             sqlCommand.Parameters.AddWithValue("@SupplierPhone", o.Phone);
             sqlCommand.Parameters.AddWithValue("@State", o.State);
             sqlCommand.Parameters.AddWithValue("@CityId", o.City.CityId);
-            if (o.Id > 0)
+            if (o.SupplierId > 0)
             {
-                sqlCommand.Parameters.AddWithValue("@Id", o.Id);
+                sqlCommand.Parameters.AddWithValue("@Id", o.SupplierId);
             }
             sqlCommand.ExecuteNonQuery();
             connection.Close();

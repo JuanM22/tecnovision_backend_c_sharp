@@ -3,31 +3,31 @@
     public class Category
     {
 
-        private long id;
+        private long categoryId;
         private string name;
         private bool state;
         private Discount discount;
 
         public Category()
         {
-            this.id = 0;
+            this.categoryId = 0;
             this.name = "";
             this.state = true;
         }
 
-        public Category(long id, string name, bool state)
+        public Category(long categoryId, string name, bool state)
         {
-            this.id = id;
+            this.categoryId = categoryId;
             this.name = name;
             this.state = state;
         }
 
         public void AddDiscount() => this.discount = new Discount();
 
-        public long Id
+        public long CategoryId
         {
-            get => id;
-            set => id = value;
+            get => categoryId;
+            set => categoryId = value;
         }
 
         public string Name

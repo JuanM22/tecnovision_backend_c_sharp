@@ -21,7 +21,7 @@ namespace tecnovision_backend.Services
                 while (reader.Read())
                 {
                     Administrator administrator = new Administrator();
-                    administrator.Id = (long)reader["administrator_id"];
+                    administrator.AdministratorId = (long)reader["administrator_id"];
                     administrator.Document = (long)reader["administrator_document"];
                     administrator.Address = reader["administrator_address"].ToString();
                     administrator.Email = reader["administrator_email"].ToString();
@@ -51,7 +51,7 @@ namespace tecnovision_backend.Services
                 if (reader.Read())
                 {
                     administrator = new Administrator();
-                    administrator.Id = (long)reader["administrator_id"];
+                    administrator.AdministratorId = (long)reader["administrator_id"];
                     administrator.Document = (long)reader["administrator_document"];
                     administrator.Address = reader["administrator_address"].ToString();
                     administrator.Email = reader["administrator_email"].ToString();
@@ -71,7 +71,7 @@ namespace tecnovision_backend.Services
         {
             SqlConnection connection = DBConnection.GetConnection();
             string query;
-            query = (o.Id > 0) ? "UPDATE Administrators set administrator_document = @Document, administrator_address = @Address, " +
+            query = (o.AdministratorId > 0) ? "UPDATE Administrators set administrator_document = @Document, administrator_address = @Address, " +
                                  "administrator_email = @Email, administrator_last_name = @LastName, administrator_name = @Name, " +
                                  "administrator_password = @Password, administrator_phone = @Phone, state = @State, city_city_id = @CityId " +
                                  "WHERE administrator_id = @Id" :
@@ -89,12 +89,43 @@ namespace tecnovision_backend.Services
             sqlCommand.Parameters.AddWithValue("@Phone", o.Phone);
             sqlCommand.Parameters.AddWithValue("@State", o.State);
             sqlCommand.Parameters.AddWithValue("@CityId", o.City.CityId);
-            if (o.Id > 0)
+            if (o.AdministratorId > 0)
             {
-                sqlCommand.Parameters.AddWithValue("@Id", o.Id);
+                sqlCommand.Parameters.AddWithValue("@Id", o.AdministratorId);
             }
             sqlCommand.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public Administrator Login(string email, string password)
+        {
+            Administrator administrator = null;
+            SqlConnection connection = DBConnection.GetConnection();
+            connection.Open();
+            string query = "SELECT * FROM Administrators " +
+                           "WHERE administrator_email = @AdministratorEmail AND administrator_password = @AdminstratorPassword";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@AdministratorEmail", email);
+            command.Parameters.AddWithValue("@AdminstratorPassword", password);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    administrator = new Administrator();
+                    administrator.AdministratorId = (long)reader["administrator_id"];
+                    administrator.Document = (long)reader["administrator_document"];
+                    administrator.Address = reader["administrator_address"].ToString();
+                    administrator.Email = reader["administrator_email"].ToString();
+                    administrator.LastName = reader["administrator_last_name"].ToString();
+                    administrator.Name = reader["administrator_name"].ToString();
+                    administrator.Password = reader["administrator_password"].ToString();
+                    administrator.Phone = (decimal)reader["administrator_phone"];
+                    administrator.State = (bool)reader["state"];
+                    administrator.City = new CityServicesImplements().FindById((long)reader["city_city_id"]);
+                }
+            }
+            connection.Close();
+            return administrator;
         }
 
     }

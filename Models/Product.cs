@@ -3,7 +3,7 @@
     public class Product
     {
 
-        private long id, code;
+        private long productId, code;
         private string description, name, imagePath;
         private int stock;
         private double unitPrice;
@@ -14,14 +14,22 @@
 
         public Product()
         {
+            this.productId = 0;
+            this.code = 0;
+            this.description = "";
+            this.name = "";
+            this.imagePath = "";
+            this.stock = 0;
+            this.unitPrice = 0;
+            this.state = true;
             this.category = new Category();
             this.brand = new Brand();
             this.supplier = new Supplier();
         }
 
-        public Product(long id, long code, string description, string name, string imagePath, int stock, double unitPrice, bool state)
+        public Product(long productId, long code, string description, string name, string imagePath, int stock, double unitPrice, bool state)
         {
-            this.id = id;
+            this.productId = productId;
             this.code = code;
             this.description = description;
             this.name = name;
@@ -31,10 +39,10 @@
             this.state = state;
         }
 
-        public long Id
+        public long ProductId
         {
-            get => id;
-            set => id = value;
+            get => productId;
+            set => productId = value;
         }
 
         public long Code

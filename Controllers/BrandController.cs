@@ -25,9 +25,10 @@ namespace tecnovision_backend.Controllers
         }
 
         [HttpPost("save")]
-        public string SaveBrand([FromBody] Brand brand)
+        public string[] SaveBrand([FromBody] Brand brand)
         {
-            string message = (brand.Id == 0) ? "La marca ha sido registrada" : "Datos actualizados correctamente";
+            string[] messages = new string[1];
+            messages[0] = (brand.BrandId == 0) ? "La marca ha sido registrada" : "Datos actualizados correctamente";
             try
             {
                 BrandServicesImplements brandServicesImplements = new BrandServicesImplements();
@@ -36,9 +37,9 @@ namespace tecnovision_backend.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                message = (brand.Id == 0) ? "Error al crear la marca" : "Error al actualizar los datos";
+                messages[0] = (brand.BrandId == 0) ? "Error al crear la marca" : "Error al actualizar los datos";
             }
-            return message;
+            return messages;
         }
 
     }
